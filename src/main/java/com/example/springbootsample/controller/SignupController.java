@@ -1,6 +1,7 @@
 package com.example.springbootsample.controller;
 
 import java.util.Map;
+import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,9 +10,7 @@ import com.example.springbootsample.applicationService.UserApplicationService;
 
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 
@@ -28,9 +27,9 @@ public class SignupController {
      * 
      */
     @GetMapping("/signup")
-    public String getSignup(Model model) {
+    public String getSignup(Model model, Locale locale) {
         // 性別を取得
-        Map<String, Integer> genderMap = userApplicationService.getGenderMap();
+        Map<String, Integer> genderMap = userApplicationService.getGenderMap(locale);
         model.addAttribute("genderMap", genderMap);
         // ユーザー登録画面に遷移
         return "user/signup";
