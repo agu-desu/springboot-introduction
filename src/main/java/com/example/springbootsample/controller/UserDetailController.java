@@ -12,6 +12,7 @@ import com.example.springbootsample.form.UserDetailForm;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 @RequestMapping("/user")
@@ -36,6 +37,24 @@ public class UserDetailController {
         model.addAttribute("userDetailForm", form);
 
         return "/user/detail";
+    }
+    
+    @PostMapping(value = "/detail", params = "update")
+    public String updateUser(UserDetailForm form, Model model) {
+        // ユーザーを更新
+        userService.updateUserOne(form.getUserId(), form.getPassword(), form.getUserName());
+
+        //　ユーザー一覧画面にリダイレクト
+        return "redirect:/user/list";
+    }
+
+    @PostMapping(value = "/detail", params = "delete")
+    public String deleteUser(UserDetailForm form, Model model) {
+        // ユーザーを削除
+        userService.deleteUserOne(form.getUserId());
+
+        //　ユーザー一覧画面にリダイレクト
+        return "redirect:/user/list";
     }
     
 }
