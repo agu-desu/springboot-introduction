@@ -28,4 +28,10 @@ public void signup(MUser user) {
 public List<MUser> getUsers() {
     return mapper.findMany();
 }
+
+/** ユーザー取得(1件) */
+@Override
+public MUser getUserOne(String userId) {
+    return mapper.findOne(userId);
+}
 }
