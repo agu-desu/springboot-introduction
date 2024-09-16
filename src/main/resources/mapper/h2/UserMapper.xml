@@ -21,7 +21,14 @@
         ,#{gender} ,#{departmentId} ,#{role} ) </insert>
 
     <!-- ユーザー複数権取得　-->
-    <select id="findMany" resultType="MUser"> select * from m_user </select>
+    <select id="findMany" resultType="MUser"> select * from m_user <where>
+        <if test="userId != null">
+            user_id like '%' ||  #{userId} || '%'
+        </if>
+        <if test="userName != null">
+            and user_name like '%' || #{userName} || '%'
+        </if>
+    </where></select>
 
     <!-- ユーザー1件取得　-->
     <select id="findOne" resultMap="user"> select * from m_user where user_id = #{userId} </select>
@@ -29,7 +36,7 @@
     <!-- ユーザー1件更新 -->
     <update id="updateOne"> update m_user set password = #{password}, user_name = #{userName} where
         user_id = #{userId} </update>
-        
+
     <!-- ユーザー1件削除 -->
     <delete id="deleteOne">delete from m_user where user_id = #{userId}</delete>
 </mapper>
