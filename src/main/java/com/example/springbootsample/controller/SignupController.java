@@ -3,10 +3,13 @@ package com.example.springbootsample.controller;
 import java.util.Map;
 import java.util.Locale;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import com.example.springbootsample.applicationService.UserApplicationService;
+import com.example.springbootsample.domain_user.model.MUser;
+import com.example.springbootsample.domain_user.service.UserService;
 import com.example.springbootsample.form.GroupOrder;
 import com.example.springbootsample.form.SignupForm;
 
@@ -30,6 +33,11 @@ public class SignupController {
     @Autowired
     private UserApplicationService userApplicationService;
 
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private ModelMapper modelMapper;
     /**
      * ユーザー登録画面を表示
      * 
@@ -56,8 +64,12 @@ public class SignupController {
         }
         // ログイン画面にリダイレクト
         log.info(form.toString());
+
+        // formをMUserクラスに変換
+        MUser user = modelMapper.map(form, MUser.class);
+
+        userService.signup(user);
+
         return "redirect:/login";
     }
-    
-    
 }
